@@ -149,6 +149,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Avatar\SkinningSample_4_0\SkinnedModel\SkinnedModelWindows.csproj">
+      <Project>{0D41E29B-829F-4255-BCA5-64DC2677DA6D}</Project>
+      <Name>SkinnedModelWindows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Avatar\SkinningSample_4_0\SkinningSample\Content\SkinningSampleContent.contentproj">
+      <Project>{9B5D0224-74D6-48D6-8733-3B70EF38956C}</Project>
+      <Name>SkinningSampleContent %28Content%29</Name>
+      <XnaReferenceType>Content</XnaReferenceType>
+    </ProjectReference>
     <ProjectReference Include="..\Content\Content.contentproj">
       <Project>{B7219195-3990-4557-87D7-856DB165635D}</Project>
       <Name>Content</Name>

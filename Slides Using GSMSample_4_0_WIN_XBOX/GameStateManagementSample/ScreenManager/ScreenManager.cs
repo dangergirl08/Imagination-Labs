@@ -17,8 +17,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Kinect;
 using GameStateManagement.GestureSelector;
-
-
+using SkinnedModel;
 #endregion
 
 namespace GameStateManagement
@@ -36,6 +35,11 @@ namespace GameStateManagement
         List<GameScreen> screens = new List<GameScreen>();
         List<GameScreen> screensToUpdate = new List<GameScreen>();
 
+        Dictionary<String, AnimationPlayer> _models;
+        public Dictionary<String, AnimationPlayer> Models
+        {
+            get { return _models; }
+        }
         // DEBUGGING FUNCTIONS
         public int NumScreens
         {
@@ -221,12 +225,13 @@ namespace GameStateManagement
         /// <summary>
         /// Constructs a new screen manager component.
         /// </summary>
-        public ScreenManager(Game game)
+        public ScreenManager(Game game, Dictionary<string, AnimationPlayer> models)
             : base(game)
         {
             // we must set EnabledGestures before we can query for them, but
             // we don't assume the game wants to read them.
             TouchPanel.EnabledGestures = GestureType.None;
+            this._models = models;
             avatars = new List<Texture2D>();
             backgrounds = new List<Texture2D>();
         }

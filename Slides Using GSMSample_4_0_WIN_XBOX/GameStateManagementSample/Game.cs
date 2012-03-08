@@ -10,6 +10,8 @@
 #region Using Statements
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using SkinnedModel;
 #endregion
 
 namespace GameStateManagement
@@ -25,6 +27,8 @@ namespace GameStateManagement
         #region Fields
         GraphicsDeviceManager graphics;
         ScreenManager screenManager;
+        Dictionary<string, AnimationPlayer> models;
+
        
         // By preloading any assets used by UI rendering, we avoid framerate glitches
         // when they suddenly need to be loaded in the middle of a menu transition.
@@ -45,13 +49,13 @@ namespace GameStateManagement
         public GameStateManagementGame()
         {
             Content.RootDirectory = "Content";
-            
+            this.models = new Dictionary<string,AnimationPlayer>();
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 853; // uncomment for non-fullscreenmode
             graphics.PreferredBackBufferHeight = 480; //uncomment for non-fullscreen mode
            // graphics.IsFullScreen = true; //  uncoment this to switch to full screen mode when user testing!
             // Create the screen manager component.
-            screenManager = new ScreenManager(this);
+            screenManager = new ScreenManager(this, this.models);
             Components.Add(screenManager);
             
             // Activate the first screens.
@@ -72,8 +76,12 @@ namespace GameStateManagement
             {
                 Content.Load<object>(asset);
             }
+            LoadModels();
         }
-
+        private void LoadModels()
+        {
+            this.models.Add("dude", new AnimationPlayer(this, "avatars/dude/dude"));
+        }
 
         #endregion
 
