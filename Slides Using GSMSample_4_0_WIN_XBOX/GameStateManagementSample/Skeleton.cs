@@ -24,7 +24,7 @@ namespace GameStateManagement
         private Sprite2D head;
         private Dictionary<JointType,Sprite2D> skeletonShapes;
         private DTWImplementation dtw;
-
+        private Dictionary<int, String> IDToModelString;
         Sprite2D circleLarge;
         Sprite2D circleMed;
         Sprite2D circleSmall;
@@ -41,6 +41,7 @@ namespace GameStateManagement
             Console.WriteLine ("INIT SKeleton**************************************");
             screenManager = sManager;
             skeletonShapes = new Dictionary<JointType, Sprite2D>();
+            IDToModelString = new Dictionary<int, string>();
             if (KinectSensor.KinectSensors.Count > 0)
             {
                 kinectSensor = KinectSensor.KinectSensors[0];
@@ -153,7 +154,7 @@ namespace GameStateManagement
                 foreach (Skeleton skeleton in skeletons)
                 {
                     //  take skeleton data and update avatar state
-
+                    UpdateModels(skeleton);
                     midViewPort.X = screenManager.GraphicsDevice.Viewport.Width / 2;
                     midViewPort.Y = screenManager.GraphicsDevice.Viewport.Height / 2;
                     UpdateJointPos(JointType.Head, skeleton);
@@ -208,7 +209,20 @@ Console.WriteLine("joint: " + headX + ", " + headY);
             }
 
         }
-
+        private void UpdateModels(Skeleton s)
+        {
+            if (s == null)
+                return;
+            if (!(s.TrackingState == SkeletonTrackingState.Tracked))
+            {
+                return; // s not tracked
+            }
+            if (!IDToModelString.ContainsKey(s.TrackingId))
+            {
+                IDToModelString.Add(s.TrackingId, "dude");
+            }
+            screenManager.Models[IDToModelString[s.TrackingId]].Update(s, Matrix.CreateRotationX((float)(-1 * Math.PI / 2.0)));
+        }
         private void UpdateJointPos(JointType jointName, Skeleton s)
         {
             if (s == null)
@@ -265,6 +279,10 @@ Console.WriteLine("joint: " + headX + ", " + headY);
             foreach (KeyValuePair<JointType, Sprite2D> shape in skeletonShapes){
                  screenManager.SpriteBatch.Draw(shape.Value.Texture,shape.Value.Rectangle, shape.Value.Color);
             //  screenManager.SpriteBatch.Draw(head.Texture,head.Rectangle, head.Color);
+            }
+            foreach (string key in screenManager.Models.Keys)
+            {
+                screenManager.Models[key].Draw(0, 100, 0);
             }
             screenManager.SpriteBatch.End();
         }

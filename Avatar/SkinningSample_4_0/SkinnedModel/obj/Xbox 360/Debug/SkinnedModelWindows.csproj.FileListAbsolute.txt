@@ -1,0 +1,6 @@
+C:\Users\Kotaro Ishiguro\Documents\classes\HCI\kinect\isa_final\Imagination-Labs\Avatar\SkinningSample_4_0\SkinnedModel\bin\Xbox 360\Debug\SkinnedModel.dll
+C:\Users\Kotaro Ishiguro\Documents\classes\HCI\kinect\isa_final\Imagination-Labs\Avatar\SkinningSample_4_0\SkinnedModel\bin\Xbox 360\Debug\SkinnedModel.pdb
+C:\Users\Kotaro Ishiguro\Documents\classes\HCI\kinect\isa_final\Imagination-Labs\Avatar\SkinningSample_4_0\SkinnedModel\obj\Xbox 360\Debug\ResolveAssemblyReference.cache
+C:\Users\Kotaro Ishiguro\Documents\classes\HCI\kinect\isa_final\Imagination-Labs\Avatar\SkinningSample_4_0\SkinnedModel\obj\Xbox 360\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Kotaro Ishiguro\Documents\classes\HCI\kinect\isa_final\Imagination-Labs\Avatar\SkinningSample_4_0\SkinnedModel\obj\Xbox 360\Debug\SkinnedModel.dll
+C:\Users\Kotaro Ishiguro\Documents\classes\HCI\kinect\isa_final\Imagination-Labs\Avatar\SkinningSample_4_0\SkinnedModel\obj\Xbox 360\Debug\SkinnedModel.pdb
