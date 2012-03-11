@@ -73,6 +73,7 @@ namespace GameStateManagement
         void SlidesMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
            // ScreenManager.TraceEnabled = true;
+            ScreenManager.EnableMainScreen();
             ScreenManager.AddScreen(slides[currentSlideIndex],e.PlayerIndex);
         }
 
@@ -177,6 +178,10 @@ namespace GameStateManagement
             {
                 //ScreenManager.AddScreen(slides[currentSlideIndex - 1], playerIndex);
                 currentSlideIndex--;
+            }
+            else if (currentSlideIndex == 0)
+            {
+                ScreenManager.DisableMainScreen();
             }
         }
 

@@ -17,8 +17,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Kinect;
 using GameStateManagement.GestureSelector;
-
-
+using SkinnedModel;
 #endregion
 
 namespace GameStateManagement
@@ -36,6 +35,11 @@ namespace GameStateManagement
         List<GameScreen> screens = new List<GameScreen>();
         List<GameScreen> screensToUpdate = new List<GameScreen>();
 
+        Dictionary<String, AnimationPlayer> _models;
+        public Dictionary<String, AnimationPlayer> Models
+        {
+            get { return _models; }
+        }
         // DEBUGGING FUNCTIONS
         public int NumScreens
         {
@@ -221,12 +225,13 @@ namespace GameStateManagement
         /// <summary>
         /// Constructs a new screen manager component.
         /// </summary>
-        public ScreenManager(Game game)
+        public ScreenManager(Game game, Dictionary<string, AnimationPlayer> models)
             : base(game)
         {
             // we must set EnabledGestures before we can query for them, but
             // we don't assume the game wants to read them.
             TouchPanel.EnabledGestures = GestureType.None;
+            this._models = models;
             avatars = new List<Texture2D>();
             backgrounds = new List<Texture2D>();
         }
@@ -295,16 +300,33 @@ namespace GameStateManagement
 
         private void InitMainGestureMenu(ContentManager content)
         {
-            Texture2D t_up = content.Load<Texture2D>("up");
-            Texture2D t_over = content.Load<Texture2D>("over");
-            Texture2D t_down = content.Load<Texture2D>("down");
+            Texture2D empty = new Texture2D(GraphicsDevice, 1, 1);
+            Texture2D t_up = empty;//content.Load<Texture2D>("up");
+            KeyValuePair<Texture2D, Rectangle> sideDock = new KeyValuePair<Texture2D, Rectangle>(content.Load<Texture2D>("menu/menu_sideDock"), new Rectangle(0, 0, 50, GraphicsDevice.Viewport.Height));
+            Texture2D t_over = content.Load<Texture2D>("menu/menu_circleHighlight");//content.Load<Texture2D>("over");
+            Texture2D t_down = content.Load<Texture2D>("menu/menu_circleHighlight");//content.Load<Texture2D>("down");
             GestureMenuEntry gme1 = new GestureMenuEntry(t_up, t_over, t_down, new Rectangle(0, 0, 100, 100), "");
             GestureMenuEntry gme2 = new GestureMenuEntry(t_up, t_over, t_down, new Rectangle(0, 100, 100, 100), "");
             GestureMenuEntry gme3 = new GestureMenuEntry(t_up, t_over, t_down, new Rectangle(0, 200, 100, 100), "");
-            mainGestureMenu = new GestureMenuScreen(new Rectangle(0, 0, 100, GraphicsDevice.Viewport.Height), 2000, "Main Menu", skeleton, content.Load<Texture2D>("gesture_menu"), this);
+            GestureMenuEntry gme4 = new GestureMenuEntry(t_up, t_over, t_down, new Rectangle(0, 300, 100, 100), "");
+            GestureMenuEntry gme5 = new GestureMenuEntry(t_up, t_over, t_down, new Rectangle(0, 400, 100, 100), "");
+            mainGestureMenu = new GestureMenuScreen(new Rectangle(0, 0, 100, GraphicsDevice.Viewport.Height), 2000, "Main Menu", skeleton, content.Load<Texture2D>("menu/menu_sideIcons_active"), content.Load<Texture2D>("menu/menu_sideIcons_idle"), empty, this);
+            mainGestureMenu.Disabled = true;
+            mainGestureMenu.Other = sideDock;
             mainGestureMenu.AddMenuItem(gme1, new Rectangle(0, 0, 100, 100));
             mainGestureMenu.AddMenuItem(gme2, new Rectangle(0, 100, 100, 100));
             mainGestureMenu.AddMenuItem(gme3, new Rectangle(0, 200, 100, 100));
+            mainGestureMenu.AddMenuItem(gme4, new Rectangle(0, 300, 100, 100));
+            mainGestureMenu.AddMenuItem(gme5, new Rectangle(0, 400, 100, 100));
+        }
+
+        public void DisableMainScreen()
+        {
+            mainGestureMenu.Disabled = true;
+        }
+        public void EnableMainScreen()
+        {
+            mainGestureMenu.Disabled = false;
         }
 
         private void InitAvatars(ContentManager content)
@@ -420,7 +442,7 @@ namespace GameStateManagement
 
                 screen.Draw(gameTime);
             }
-            //mainGestureMenu.Draw(gameTime);
+            mainGestureMenu.Draw(gameTime);
             skeleton.Draw(gameTime);
         }
 
@@ -513,10 +535,6 @@ namespace GameStateManagement
 
             spriteBatch.End();
         }
-
-        
-
-
         #endregion
     }
 }

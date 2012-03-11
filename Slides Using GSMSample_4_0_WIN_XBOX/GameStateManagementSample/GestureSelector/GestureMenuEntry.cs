@@ -60,8 +60,7 @@ namespace GameStateManagement.GestureSelector
                     drawTexture = this._up;
                     break;
             }
-            spriteBatch.Draw(drawTexture, this._pos, Color.White);
-
+            spriteBatch.Draw(drawTexture, this._pos, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.49F);
         }
         #endregion
     }

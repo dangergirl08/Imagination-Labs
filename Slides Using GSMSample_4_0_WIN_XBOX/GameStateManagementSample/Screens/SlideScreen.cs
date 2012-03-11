@@ -31,8 +31,6 @@ namespace GameStateManagement
        //   Sprite2D tovSprite;
        // Sprite2D questionSprite;
         SpriteBatch spriteBatch;
-        Texture2D background_dirty;
-        Texture2D background_active;
         Color backColor = Color.CornflowerBlue;
         ContentManager content;
         bool captured;
@@ -79,8 +77,6 @@ namespace GameStateManagement
         {
             if (content == null)
                 content = new ContentManager(ScreenManager.Game.Services, "Content");
-            background_dirty = content.Load<Texture2D>(@"bg1_dirty");
-            background_active = content.Load<Texture2D>(@"bg1_active");
             spriteBatch = ScreenManager.SpriteBatch;
             viewport = ScreenManager.GraphicsDevice.Viewport;
             if(backgroundScene == null)
@@ -481,7 +477,7 @@ namespace GameStateManagement
             spriteBatch.Draw(ScreenManager.BackgroundExtraPages, ScreenManager.fullscreenRectangle, Color.White);
             spriteBatch.Draw(backgroundScene,ScreenManager.fullscreenRectangle, Color.White);
            // spriteBatch.Draw(ScreenManager.Menu_SideDock, sideMenuDockRect, Color.White);
-            spriteBatch.Draw(ScreenManager.Menu_SideIcons_Idle, ScreenManager.SideMenuIconsRectangle, Color.White);
+            //spriteBatch.Draw(ScreenManager.Menu_SideIcons_Idle, ScreenManager.SideMenuIconsRectangle, Color.White);
             for(int i = 0; i < slideObjects.Count; i++){
                SlideObject curSprite = slideObjects[i];
                curSprite.Draw(gameTime,spriteBatch);
